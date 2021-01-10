@@ -47,11 +47,29 @@
 
 #if (defined (__AVR_AT90CAN32__) || \
 	 defined (__AVR_AT90CAN64__) || \
-	 defined (__AVR_AT90CAN128__)) && \
+	 defined (__AVR_AT90CAN128__) || \
+	 defined (__AVR_ATmega16M1__) || \
+	 defined (__AVR_ATmega32M1__) || \
+	 defined (__AVR_ATmega64M1__) || \
+	 defined (__AVR_ATmega32C1__) || \
+	 defined (__AVR_ATmega64C1__)) && \
 	 BUILD_FOR_AT90CAN == 1
 
 #if F_CPU != 16000000UL
 	#error	only 16 MHz for F_CPU supported!
+#endif
+
+#if (defined (__AVR_ATmega16M1__) || \
+	 defined (__AVR_ATmega32M1__) || \
+	 defined (__AVR_ATmega64M1__) || \
+	 defined (__AVR_ATmega32C1__) || \
+	 defined (__AVR_ATmega64C1__))
+// The interrupt vectors are named diffently in the standard lib, but they
+// are exactly the same.
+#define CANIT_vect CAN_INT_vect
+#define CANIT_vect_num CAN_INT_vect_num
+#define OVRIT_vect CAN_TOVF_vect
+#define OVRIT_vect_num CAN_TOVF_vect_num
 #endif
 
 #define	SUPPORT_FOR_AT90CAN__		1
